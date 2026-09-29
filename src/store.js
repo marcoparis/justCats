@@ -1,13 +1,31 @@
-import { configureStore } from '@reduxjs/toolkit';
-import cartReducer from './CartSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import cartReducer from "./CartSlice";
 
- // Create a Redux store using configureStore from Redux Toolkit
-const store = configureStore({
-    // Define the root reducer object
-    reducer: {
-        // 'cart' is the name of the slice in the store, and it's managed by cartReducer
-        cart: cartReducer,
-    },
+const STORAGE_KEY = "paradise-nursery-cart";
+
+const loadCart = () => {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    return Array.isArray(saved?.items) ? { cart: saved } : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
+export const createStore = (preloadedState) =>
+  configureStore({
+    reducer: { cart: cartReducer },
+    preloadedState,
+  });
+
+const store = createStore(loadCart());
+
+store.subscribe(() => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(store.getState().cart));
+  } catch {
+    // storage unavailable (private mode, quota): the cart just won't persist
+  }
 });
 
-export default store; // Export the store for use in the app (e.g., in <Provider store={store}>)
+export default store;
