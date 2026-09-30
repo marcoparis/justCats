@@ -43,7 +43,7 @@ function Shelter({ onHomeClick }) {
       {view === "credits" && <Credits onBack={() => setView("cats")} />}
 
       <footer className="shelter-footer">
-        Progetto dimostrativo: i gatti e le richieste non sono reali. ·{" "}
+        I gatti e le loro storie sono di fantasia, le foto sono reali. ·{" "}
         <button className="footer-link" onClick={() => setView("credits")}>Crediti foto</button>
       </footer>
     </div>

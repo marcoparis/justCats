@@ -4,6 +4,7 @@ import { CheckCircle2, X } from "lucide-react";
 import { removeCat, clearSelection, selectSelectedIds } from "./AdoptionSlice";
 import { catById } from "./data/cats";
 import { validateRequest, HOME_TYPES } from "./validation";
+import { sendAdoptionRequest } from "./adoptionApi";
 import "./AdoptionRequest.css";
 
 const EMPTY_FORM = { name: "", email: "", phone: "", home: "", message: "", privacy: false };
@@ -14,6 +15,10 @@ const AdoptionRequest = ({ onBrowseCats }) => {
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
   const [sent, setSent] = useState(null);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState(null);
+  // honeypot: hidden from people, bots tend to tick it
+  const [botcheck, setBotcheck] = useState(false);
 
   const update = (field) => (e) => {
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -21,14 +26,24 @@ const AdoptionRequest = ({ onBrowseCats }) => {
     setErrors((errs) => ({ ...errs, [field]: undefined }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const found = validateRequest(form);
     setErrors(found);
     if (Object.keys(found).length > 0) return;
-    setSent({ name: form.name.trim().split(" ")[0], email: form.email.trim(), cats: selectedCats.map((c) => c.name) });
-    dispatch(clearSelection());
-    setForm(EMPTY_FORM);
+
+    setSending(true);
+    setSendError(null);
+    try {
+      await sendAdoptionRequest(form, selectedCats, { botcheck });
+      setSent({ name: form.name.trim().split(" ")[0], email: form.email.trim(), cats: selectedCats.map((c) => c.name) });
+      dispatch(clearSelection());
+      setForm(EMPTY_FORM);
+    } catch (err) {
+      setSendError(err.message);
+    } finally {
+      setSending(false);
+    }
   };
 
   if (sent) {
@@ -41,7 +56,6 @@ const AdoptionRequest = ({ onBrowseCats }) => {
             Hai chiesto di conoscere <strong>{sent.cats.join(", ")}</strong>. Ti scriveremo a{" "}
             <strong>{sent.email}</strong> entro pochi giorni per fissare un incontro al rifugio.
           </p>
-          <p className="muted">Questo è un progetto dimostrativo: nessuna richiesta viene davvero inviata.</p>
           <button className="primary-button" onClick={onBrowseCats}>Torna ai gatti</button>
         </div>
       </div>
@@ -130,9 +144,26 @@ const AdoptionRequest = ({ onBrowseCats }) => {
         </label>
         {fieldError("privacy")}
 
+        <input
+          type="checkbox"
+          name="botcheck"
+          className="honeypot"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          checked={botcheck}
+          onChange={(e) => setBotcheck(e.target.checked)}
+        />
+
+        {sendError && <p className="send-error" role="alert">{sendError}</p>}
+
         <div className="form-actions">
-          <button type="button" className="secondary-button" onClick={onBrowseCats}>Aggiungi altri gatti</button>
-          <button type="submit" className="primary-button">Invia la richiesta</button>
+          <button type="button" className="secondary-button" onClick={onBrowseCats} disabled={sending}>
+            Aggiungi altri gatti
+          </button>
+          <button type="submit" className="primary-button" disabled={sending}>
+            {sending ? "Invio in corso..." : "Invia la richiesta"}
+          </button>
         </div>
       </form>
     </div>

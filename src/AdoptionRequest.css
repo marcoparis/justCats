@@ -165,3 +165,19 @@
     flex: 1;
   }
 }
+
+.honeypot {
+  display: none;
+}
+
+.send-error {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: #ffebee;
+  color: var(--danger);
+}
+
+.form-actions button:disabled {
+  opacity: 0.6;
+}

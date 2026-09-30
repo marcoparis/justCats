@@ -1,6 +1,6 @@
 # justCats – Adotta un gatto
 
-A React + Redux Toolkit web app for a (fictional) cat shelter: browse the cats looking for a home, filter them by category, pick up to three you would like to meet and send an adoption request.
+A React + Redux Toolkit web app for a (fictional) cat shelter: browse the cats looking for a home, filter them by category, pick up to three you would like to meet and send an adoption request, which is delivered by email.
 
 **Live demo:** https://marcoparis.github.io/justCats/
 
@@ -11,6 +11,7 @@ A React + Redux Toolkit web app for a (fictional) cat shelter: browse the cats l
 - **Adoption list** managed with Redux: add or remove cats (max 3 per request), live counter in the navbar
 - The selection is **persisted in `localStorage`**, so it survives a page reload
 - **Adoption request form** with client-side validation (name, email, optional phone, home type, message, consent), accessible error messages (`aria-invalid`, `aria-describedby`) and a confirmation screen
+- Requests are **delivered by email** through [Web3Forms](https://web3forms.com) (no backend needed), with a honeypot field against spam bots, loading state and error handling
 - **Photo credits page**: every photo comes from Wikimedia Commons under a free licence, with author and licence listed
 - Responsive layout, keyboard-accessible controls, optimised WebP images (~650 KB for all cats)
 
@@ -23,6 +24,7 @@ A React + Redux Toolkit web app for a (fictional) cat shelter: browse the cats l
 | Build tooling | Vite |
 | Testing | Vitest |
 | Linting | ESLint |
+| Email delivery | Web3Forms |
 | Deployment | GitHub Pages (`gh-pages`) |
 
 ## Architecture
@@ -33,6 +35,7 @@ src/
 ├── AdoptionSlice.js       # Redux slice: selected cats (toggle, remove, clear, max 3) + selectors
 ├── store.js               # Redux store, loads/saves the selection in localStorage
 ├── validation.js          # pure function validating the adoption form
+├── adoptionApi.js         # sends the request to Web3Forms (email delivery)
 ├── App.jsx                # landing page and transition to the shelter
 ├── Shelter.jsx            # navbar with request counter, view switching, footer
 ├── CatList.jsx            # filters and cat cards
