@@ -1,12 +1,12 @@
 :root {
-  --green: #2e7d32;
-  --green-dark: #1b5e20;
-  --green-light: #e8f5e9;
-  --bg: #f6f8f5;
+  --accent: #c2410c;
+  --accent-dark: #9a3412;
+  --accent-light: #fff1e6;
+  --bg: #fffaf5;
   --card: #ffffff;
-  --text: #1f2a1f;
-  --muted: #5f6b5f;
-  --border: #dfe6dd;
+  --text: #2d2320;
+  --muted: #6f6158;
+  --border: #efe2d6;
   --danger: #c62828;
 
   font-family: Inter, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -34,7 +34,7 @@ button:disabled {
 
 button:focus-visible,
 a:focus-visible {
-  outline: 3px solid #81c784;
+  outline: 3px solid #fdba74;
   outline-offset: 2px;
 }
 
@@ -48,22 +48,22 @@ a:focus-visible {
 }
 
 .primary-button {
-  background-color: var(--green);
+  background-color: var(--accent);
   color: white;
-  border: 2px solid var(--green);
+  border: 2px solid var(--accent);
 }
 
 .primary-button:hover {
-  background-color: var(--green-dark);
-  border-color: var(--green-dark);
+  background-color: var(--accent-dark);
+  border-color: var(--accent-dark);
 }
 
 .secondary-button {
   background-color: transparent;
-  color: var(--green);
-  border: 2px solid var(--green);
+  color: var(--accent);
+  border: 2px solid var(--accent);
 }
 
 .secondary-button:hover {
-  background-color: var(--green-light);
+  background-color: var(--accent-light);
 }

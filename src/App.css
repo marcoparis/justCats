@@ -1,6 +1,6 @@
 .landing-page {
   min-height: 100vh;
-  background: url("/images/greenhouse.webp") center / cover no-repeat, var(--green-dark);
+  background: url("/images/hero.webp") center / cover no-repeat, var(--accent-dark);
 }
 
 .landing-overlay {
@@ -11,8 +11,7 @@
   justify-content: center;
   gap: 48px;
   padding: 48px 24px;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  background: linear-gradient(90deg, rgba(40, 20, 10, 0.78), rgba(40, 20, 10, 0.55));
   color: white;
 }
 
@@ -26,8 +25,8 @@
 }
 
 .landing-content h1 {
-  font-size: clamp(2.2rem, 5vw, 3rem);
-  line-height: 1.15;
+  font-size: clamp(2.6rem, 6vw, 3.6rem);
+  line-height: 1.1;
 }
 
 .landing-content p {
@@ -37,26 +36,26 @@
 .divider {
   width: 60px;
   height: 3px;
-  background-color: #66bb6a;
+  background-color: #fdba74;
 }
 
 .get-started-button {
   margin-top: 28px;
-  padding: 15px 36px;
-  font-size: 1.3rem;
+  padding: 15px 32px;
+  font-size: 1.2rem;
   font-weight: 600;
   border: none;
-  border-radius: 8px;
-  background-color: #43a047;
+  border-radius: 999px;
+  background-color: #ea580c;
   color: white;
   transition: background-color 0.2s;
 }
 
 .get-started-button:hover {
-  background-color: var(--green);
+  background-color: var(--accent);
 }
 
-.product-list-container {
+.shelter-container {
   position: fixed;
   inset: 0;
   transform: translateY(100%);
@@ -67,7 +66,7 @@
   visibility: hidden;
 }
 
-.product-list-container.visible {
+.shelter-container.visible {
   transform: translateY(0);
   visibility: visible;
 }

@@ -1,12 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import cartReducer from "./CartSlice";
+import adoptionReducer from "./AdoptionSlice";
+import { catById } from "./data/cats";
 
-const STORAGE_KEY = "paradise-nursery-cart";
+const STORAGE_KEY = "zampa-amica-adoption";
 
-const loadCart = () => {
+const loadSelection = () => {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    return Array.isArray(saved?.items) ? { cart: saved } : undefined;
+    if (!Array.isArray(saved?.selectedIds)) return undefined;
+    // drop ids of cats that are no longer in the catalog
+    return { adoption: { selectedIds: saved.selectedIds.filter((id) => catById(id)) } };
   } catch {
     return undefined;
   }
@@ -14,17 +17,17 @@ const loadCart = () => {
 
 export const createStore = (preloadedState) =>
   configureStore({
-    reducer: { cart: cartReducer },
+    reducer: { adoption: adoptionReducer },
     preloadedState,
   });
 
-const store = createStore(loadCart());
+const store = createStore(loadSelection());
 
 store.subscribe(() => {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(store.getState().cart));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(store.getState().adoption));
   } catch {
-    // storage unavailable (private mode, quota): the cart just won't persist
+    // storage unavailable (private mode, quota): the selection just won't persist
   }
 });
 

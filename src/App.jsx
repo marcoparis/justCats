@@ -1,29 +1,29 @@
 import { useState } from "react";
-import ProductList from "./ProductList";
+import Shelter from "./Shelter";
 import AboutUs from "./AboutUs";
 import "./App.css";
 
 function App() {
-  const [showProductList, setShowProductList] = useState(false);
+  const [showShelter, setShowShelter] = useState(false);
 
   return (
     <>
-      <header className="landing-page" aria-hidden={showProductList}>
+      <header className="landing-page" aria-hidden={showShelter}>
         <div className="landing-overlay">
           <div className="landing-content">
-            <h1>Welcome To Paradise Nursery</h1>
+            <h1>Zampa Amica</h1>
             <div className="divider" />
-            <p>Where Green Meets Serenity</p>
-            <button className="get-started-button" onClick={() => setShowProductList(true)}>
-              Get Started
+            <p>Ogni gatto merita una casa</p>
+            <button className="get-started-button" onClick={() => setShowShelter(true)}>
+              Scopri chi aspetta te
             </button>
           </div>
           <AboutUs />
         </div>
       </header>
 
-      <div className={`product-list-container ${showProductList ? "visible" : ""}`}>
-        <ProductList onHomeClick={() => setShowProductList(false)} />
+      <div className={`shelter-container ${showShelter ? "visible" : ""}`}>
+        <Shelter onHomeClick={() => setShowShelter(false)} />
       </div>
     </>
   );
