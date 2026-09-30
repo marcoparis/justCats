@@ -1,8 +1,8 @@
-# Zampa Amica – Adotta un gatto
+# justCats – Adotta un gatto
 
 A React + Redux Toolkit web app for a (fictional) cat shelter: browse the cats looking for a home, filter them by category, pick up to three you would like to meet and send an adoption request.
 
-**Live demo:** https://marcoparis.github.io/e-plantShopping/
+**Live demo:** https://marcoparis.github.io/justCats/
 
 ## Features
 

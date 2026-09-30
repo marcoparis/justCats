@@ -5,7 +5,7 @@ function AboutUs() {
     <div className="about-us-container">
       <p className="about-us-description">Un rifugio, tante storie, una sola missione.</p>
       <p>
-        Zampa Amica accoglie gatti abbandonati, randagi o rimasti senza famiglia. Li curiamo, li vacciniamo e li
+        justCats accoglie gatti abbandonati, randagi o rimasti senza famiglia. Li curiamo, li vacciniamo e li
         sterilizziamo, e poi cerchiamo per ognuno la casa giusta.
       </p>
       <p>

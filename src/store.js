@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import adoptionReducer from "./AdoptionSlice";
 import { catById } from "./data/cats";
 
-const STORAGE_KEY = "zampa-amica-adoption";
+const STORAGE_KEY = "justcats-adoption";
 
 const loadSelection = () => {
   try {

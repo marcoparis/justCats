@@ -11,7 +11,7 @@ function App() {
       <header className="landing-page" aria-hidden={showShelter}>
         <div className="landing-overlay">
           <div className="landing-content">
-            <h1>Zampa Amica</h1>
+            <h1>justCats</h1>
             <div className="divider" />
             <p>Ogni gatto merita una casa</p>
             <button className="get-started-button" onClick={() => setShowShelter(true)}>

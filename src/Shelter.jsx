@@ -17,7 +17,7 @@ function Shelter({ onHomeClick }) {
         <button className="brand" onClick={onHomeClick}>
           <span className="brand-logo"><PawPrint size={28} /></span>
           <span>
-            <span className="brand-name">Zampa Amica</span>
+            <span className="brand-name">justCats</span>
             <span className="brand-tagline">Rifugio felino · adozioni</span>
           </span>
         </button>
