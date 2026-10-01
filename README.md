@@ -1,69 +1,59 @@
-# justCats – Adotta un gatto
+# justCats
 
-A React + Redux Toolkit web app for a (fictional) cat shelter: browse the cats looking for a home, filter them by category, pick up to three you would like to meet and send an adoption request, which is delivered by email.
+Il sito di un rifugio per gatti, immaginario: sfogli i gatti che cercano casa, li filtri per età o per situazione, scegli quelli che vorresti conoscere e mandi una richiesta di adozione. La richiesta arriva davvero per email.
 
-**Live demo:** https://marcoparis.github.io/justCats/
+Sito: https://marcoparis.github.io/justCats/
 
-## Features
+## Cosa si può fare
 
-- **16 cats** with photo, age, sex, personality traits, health notes and a short story
-- **Category filters**: kittens, adults, seniors and special cases (a cat with an ocular prosthesis, a bonded pair to adopt together)
-- **Adoption list** managed with Redux: add or remove cats (max 3 per request), live counter in the navbar
-- The selection is **persisted in `localStorage`**, so it survives a page reload
-- **Adoption request form** with client-side validation (name, email, optional phone, home type, message, consent), accessible error messages (`aria-invalid`, `aria-describedby`) and a confirmation screen
-- Requests are **delivered by email** through [Web3Forms](https://web3forms.com) (no backend needed), with a honeypot field against spam bots, loading state and error handling
-- **Photo credits page**: every photo comes from Wikimedia Commons under a free licence, with author and licence listed
-- Responsive layout, keyboard-accessible controls, optimised WebP images (~650 KB for all cats)
+I gatti sono 16: cuccioli, adulti, anziani e due casi speciali, Pirata con un occhio protesico e Gianni e Pinotto, due fratelli che si adottano solo insieme. Ognuno ha foto, età, carattere, stato di salute e una breve storia.
 
-## Tech stack
+Si possono scegliere fino a tre gatti per richiesta. Il contatore in alto mostra quanti ne hai scelti, e la scelta resta salvata anche se ricarichi la pagina. Il modulo di adozione controlla i campi (nome, email, telefono facoltativo, tipo di casa, un messaggio e il consenso) e mostra gli errori accanto a ciascuno. All'invio la richiesta viene spedita via email e compare una conferma.
 
-| Area | Tools |
-| --- | --- |
-| UI | React 18, CSS (custom properties, grid, flexbox), lucide-react icons |
-| State management | Redux Toolkit (`createSlice`, `configureStore`), React-Redux hooks |
-| Build tooling | Vite |
-| Testing | Vitest |
-| Linting | ESLint |
-| Email delivery | Web3Forms |
-| Deployment | GitHub Pages (`gh-pages`) |
+## Com'è fatto
 
-## Architecture
+React 18 con Redux Toolkit. Le regole stanno fuori dai componenti, così si testano senza disegnare la pagina:
 
-```
-src/
-├── data/cats.js           # catalog: cats, categories and photo credits
-├── AdoptionSlice.js       # Redux slice: selected cats (toggle, remove, clear, max 3) + selectors
-├── store.js               # Redux store, loads/saves the selection in localStorage
-├── validation.js          # pure function validating the adoption form
-├── adoptionApi.js         # sends the request to Web3Forms (email delivery)
-├── App.jsx                # landing page and transition to the shelter
-├── Shelter.jsx            # navbar with request counter, view switching, footer
-├── CatList.jsx            # filters and cat cards
-├── AdoptionRequest.jsx    # selected cats, request form, confirmation
-├── Credits.jsx            # photo credits
-└── *.test.js              # unit tests for the slice, the catalog and the validation
-```
+- la scelta dei gatti (aggiungi, togli, massimo tre) è uno slice Redux, `AdoptionSlice.js`
+- la validazione del modulo è una funzione pura, `validation.js`
+- l'invio è in `adoptionApi.js`
 
-Business rules live outside the components: the selection rules are in the Redux slice and the form rules in `validation.js`, so both are unit-tested without rendering the UI.
+Lo store salva la selezione in `localStorage` a ogni modifica e la ricarica all'avvio, scartando i gatti che non esistono più nel catalogo.
 
-The Vite `base` is relative (`./`), so the build works on GitHub Pages whatever the repository is called.
+Le richieste passano da [Web3Forms](https://web3forms.com), che inoltra il modulo alla mia casella senza bisogno di un server. La chiave nel codice è pubblica per scelta: permette solo di mandare email a quell'indirizzo. Un campo nascosto ferma i bot più semplici. Durante l'invio il pulsante si disattiva e, se qualcosa va storto, compare un messaggio e la scelta dei gatti non si perde.
 
-## Getting started
+Le foto sono salvate nel progetto in WebP (circa 650 KB in tutto) invece di essere caricate da siti esterni. Il percorso base di Vite è relativo, così il sito funziona su GitHub Pages qualunque sia il nome del repository.
+
+Build con Vite, test con Vitest, lint con ESLint, pubblicazione con `gh-pages`.
+
+## Avvio in locale
 
 ```bash
 npm install
-npm run dev      # start the dev server
-npm test         # run the unit tests
-npm run lint     # lint the code
-npm run build    # production build in dist/
-npm run deploy   # build and publish to GitHub Pages
+npm run dev       # sito in locale
+npm test          # test di selezione, validazione e invio
+npm run deploy    # build e pubblicazione su GitHub Pages
 ```
 
-## Photo credits
+## File principali
 
-The cat names and stories are fictional. Photos from [Wikimedia Commons](https://commons.wikimedia.org), resized and cropped:
+```
+src/data/cats.js         catalogo: gatti, categorie e crediti delle foto
+src/AdoptionSlice.js     selezione dei gatti
+src/store.js             store Redux e salvataggio in localStorage
+src/validation.js        controllo del modulo
+src/adoptionApi.js       invio della richiesta a Web3Forms
+src/Shelter.jsx          barra in alto e navigazione tra le pagine
+src/CatList.jsx          filtri e schede dei gatti
+src/AdoptionRequest.jsx  gatti scelti, modulo e conferma
+src/Credits.jsx          pagina dei crediti delle foto
+```
 
-| Cat | Author | Licence | Source |
+## Crediti delle foto
+
+Nomi e storie dei gatti sono inventati, le foto sono reali e vengono da [Wikimedia Commons](https://commons.wikimedia.org), ridimensionate e ritagliate:
+
+| Gatto | Autore | Licenza | Fonte |
 | --- | --- | --- | --- |
 | Biscotto | Marie-Lan Nguyen | CC BY 2.5 | [link](https://commons.wikimedia.org/wiki/File:Golden_tabby_and_white_kitten_n01.jpg) |
 | Briciola | André Karwath aka Aka | CC BY-SA 2.5 | [link](https://commons.wikimedia.org/wiki/File:Six_weeks_old_cat_(aka).jpg) |
@@ -73,7 +63,7 @@ The cat names and stories are fictional. Photos from [Wikimedia Commons](https:/
 | Tigro | David Corby (edited by Arad) | CC BY 2.5 | [link](https://commons.wikimedia.org/wiki/File:Kittyply_edit1.jpg) |
 | Nebbia | Stephanemartin | CC BY-SA 3.0 | [link](https://commons.wikimedia.org/wiki/File:Chartreux-cat-edouard-marie.jpg) |
 | Cenere | Jakub Hałun | CC BY 4.0 | [link](https://commons.wikimedia.org/wiki/File:Cat_in_Piran,_Slovenia,_20240504_1600_8594.jpg) |
-| Crema, cover | Basile Morin | CC BY-SA 4.0 | [link](https://commons.wikimedia.org/wiki/File:Felis_silvestris_catus_lying_on_rice_straw.jpg) |
+| Crema, copertina | Basile Morin | CC BY-SA 4.0 | [link](https://commons.wikimedia.org/wiki/File:Felis_silvestris_catus_lying_on_rice_straw.jpg) |
 | Azzurra | AdinaVoicu | CC0 | [link](https://commons.wikimedia.org/wiki/File:Tabby_cat_with_blue_eyes-3336579.jpg) |
 | Neve | Keith Kissel | CC BY 2.0 | [link](https://commons.wikimedia.org/wiki/File:June_odd-eyed-cat_cropped.jpg) |
 | Arlecchina | Terragio67 | CC BY-SA 4.0 | [link](https://commons.wikimedia.org/wiki/File:Calico_cat,_-_Assisi,_Italy.jpg) |
