@@ -13,9 +13,9 @@ function App() {
           <div className="landing-content">
             <h1>justCats</h1>
             <div className="divider" />
-            <p>Ogni gatto merita una casa</p>
+            <p>Every cat deserves a home</p>
             <button className="get-started-button" onClick={() => setShowShelter(true)}>
-              Scopri chi aspetta te
+              Meet who is waiting for you
             </button>
           </div>
           <AboutUs />

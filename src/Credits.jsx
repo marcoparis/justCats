@@ -2,19 +2,19 @@ import { ArrowLeft } from "lucide-react";
 import { cats, photoCredits } from "./data/cats";
 
 function Credits({ onBack }) {
-  const entries = [...cats.map((c) => [c.name, photoCredits[c.id]]), ["Immagine di copertina", photoCredits.hero]];
+  const entries = [...cats.map((c) => [c.name, photoCredits[c.id]]), ["Cover image", photoCredits.hero]];
 
   return (
     <main className="credits">
-      <button className="inline-link back" onClick={onBack}><ArrowLeft size={16} /> Torna ai gatti</button>
-      <h1>Crediti fotografici</h1>
+      <button className="inline-link back" onClick={onBack}><ArrowLeft size={16} /> Back to the cats</button>
+      <h1>Photo credits</h1>
       <p className="muted">
-        Tutte le foto provengono da Wikimedia Commons e sono usate secondo le rispettive licenze libere (ridimensionate e
-        ritagliate). I nomi e le storie dei gatti sono inventati.
+        All photos come from Wikimedia Commons and are used under their respective free licenses (resized and
+        cropped). The cats&apos; names and stories are made up.
       </p>
       <table className="credits-table">
         <thead>
-          <tr><th>Foto</th><th>Autore</th><th>Licenza</th></tr>
+          <tr><th>Photo</th><th>Author</th><th>License</th></tr>
         </thead>
         <tbody>
           {entries.map(([label, credit]) => (

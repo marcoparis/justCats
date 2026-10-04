@@ -51,7 +51,7 @@ describe("catalog data", () => {
   });
 
   it("finds cats by id", () => {
-    expect(catById("pirata").name).toBe("Pirata");
+    expect(catById("pirata").name).toBe("Pirate");
     expect(catById("unknown")).toBeUndefined();
   });
 });

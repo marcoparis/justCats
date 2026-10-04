@@ -6,16 +6,16 @@ export async function sendAdoptionRequest(form, cats, { botcheck = false } = {})
   const catNames = cats.map((c) => c.name).join(", ");
   const payload = {
     access_key: WEB3FORMS_ACCESS_KEY,
-    subject: `Nuova richiesta di adozione: ${catNames}`,
+    subject: `New adoption request: ${catNames}`,
     from_name: "justCats",
     // like an unticked checkbox, the honeypot is only sent when a bot fills it in
     ...(botcheck && { botcheck: "on" }),
     name: form.name.trim(),
     email: form.email.trim(),
-    telefono: form.phone.trim() || "non indicato",
-    abitazione: form.home,
-    gatti: cats.map((c) => `${c.name} (${c.sex.toLowerCase()}, ${c.age})`).join("; "),
-    messaggio: form.message.trim(),
+    phone: form.phone.trim() || "not provided",
+    home: form.home,
+    cats: cats.map((c) => `${c.name} (${c.sex.toLowerCase()}, ${c.age})`).join("; "),
+    message: form.message.trim(),
   };
 
   // FormData keeps this a "simple" CORS request (no preflight), as in the Web3Forms docs
@@ -26,11 +26,11 @@ export async function sendAdoptionRequest(form, cats, { botcheck = false } = {})
   try {
     res = await fetch(ENDPOINT, { method: "POST", body });
   } catch {
-    throw new Error("Impossibile inviare la richiesta: controlla la connessione e riprova.");
+    throw new Error("Could not send the request: check your connection and try again.");
   }
 
   const data = await res.json().catch(() => null);
   if (!res.ok || !data?.success) {
-    throw new Error("Non siamo riusciti a inviare la richiesta. Riprova tra qualche minuto.");
+    throw new Error("We could not send your request. Please try again in a few minutes.");
   }
 }

@@ -18,21 +18,21 @@ function Shelter({ onHomeClick }) {
           <span className="brand-logo"><PawPrint size={28} /></span>
           <span>
             <span className="brand-name">justCats</span>
-            <span className="brand-tagline">Rifugio felino · adozioni</span>
+            <span className="brand-tagline">Cat shelter · adoptions</span>
           </span>
         </button>
 
         <div className="nav-actions">
           <button className={`nav-link ${view === "cats" ? "active" : ""}`} onClick={() => setView("cats")}>
-            I nostri gatti
+            Our cats
           </button>
           <button
             className={`request-button ${view === "request" ? "active" : ""}`}
             onClick={() => setView("request")}
-            aria-label={`La mia richiesta di adozione, ${selectedCount} ${selectedCount === 1 ? "gatto" : "gatti"}`}
+            aria-label={`My adoption request, ${selectedCount} ${selectedCount === 1 ? "cat" : "cats"}`}
           >
             <Heart size={20} fill={selectedCount > 0 ? "currentColor" : "none"} />
-            <span>La mia richiesta</span>
+            <span>My request</span>
             {selectedCount > 0 && <span className="request-badge">{selectedCount}</span>}
           </button>
         </div>
@@ -43,8 +43,8 @@ function Shelter({ onHomeClick }) {
       {view === "credits" && <Credits onBack={() => setView("cats")} />}
 
       <footer className="shelter-footer">
-        I gatti e le loro storie sono di fantasia, le foto sono reali. ·{" "}
-        <button className="footer-link" onClick={() => setView("credits")}>Crediti foto</button>
+        The cats and their stories are made up, the photos are real. ·{" "}
+        <button className="footer-link" onClick={() => setView("credits")}>Photo credits</button>
       </footer>
     </div>
   );

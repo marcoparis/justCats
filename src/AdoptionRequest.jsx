@@ -51,12 +51,12 @@ const AdoptionRequest = ({ onBrowseCats }) => {
       <div className="request-container">
         <div className="request-message">
           <CheckCircle2 size={56} className="success-icon" />
-          <h2>Grazie {sent.name}, richiesta inviata!</h2>
+          <h2>Thank you {sent.name}, your request has been sent!</h2>
           <p>
-            Hai chiesto di conoscere <strong>{sent.cats.join(", ")}</strong>. Ti scriveremo a{" "}
-            <strong>{sent.email}</strong> entro pochi giorni per fissare un incontro al rifugio.
+            You asked to meet <strong>{sent.cats.join(", ")}</strong>. We will write to you at{" "}
+            <strong>{sent.email}</strong> within a few days to arrange a visit to the shelter.
           </p>
-          <button className="primary-button" onClick={onBrowseCats}>Torna ai gatti</button>
+          <button className="primary-button" onClick={onBrowseCats}>Back to the cats</button>
         </div>
       </div>
     );
@@ -66,9 +66,9 @@ const AdoptionRequest = ({ onBrowseCats }) => {
     return (
       <div className="request-container">
         <div className="request-message">
-          <h2>Non hai ancora scelto nessun gatto</h2>
-          <p className="muted">Sfoglia i nostri ospiti e tocca “Voglio conoscere…” su quelli che ti hanno rubato il cuore.</p>
-          <button className="primary-button" onClick={onBrowseCats}>Scopri i gatti</button>
+          <h2>You have not picked any cat yet</h2>
+          <p className="muted">Browse our guests and tap “I want to meet…” on the ones that stole your heart.</p>
+          <button className="primary-button" onClick={onBrowseCats}>Meet the cats</button>
         </div>
       </div>
     );
@@ -81,9 +81,9 @@ const AdoptionRequest = ({ onBrowseCats }) => {
 
   return (
     <div className="request-container">
-      <h1>La tua richiesta di adozione</h1>
+      <h1>Your adoption request</h1>
 
-      <section aria-label="Gatti selezionati">
+      <section aria-label="Selected cats">
         <ul className="selected-list">
           {selectedCats.map((c) => (
             <li key={c.id} className="selected-cat">
@@ -92,7 +92,7 @@ const AdoptionRequest = ({ onBrowseCats }) => {
                 <strong>{c.name}</strong>
                 <span className="muted">{c.sex} · {c.age}</span>
               </div>
-              <button className="remove-button" onClick={() => dispatch(removeCat(c.id))} aria-label={`Rimuovi ${c.name}`}>
+              <button className="remove-button" onClick={() => dispatch(removeCat(c.id))} aria-label={`Remove ${c.name}`}>
                 <X size={18} />
               </button>
             </li>
@@ -101,9 +101,9 @@ const AdoptionRequest = ({ onBrowseCats }) => {
       </section>
 
       <form className="request-form" onSubmit={handleSubmit} noValidate>
-        <h2>I tuoi dati</h2>
+        <h2>Your details</h2>
 
-        <label htmlFor="name">Nome e cognome</label>
+        <label htmlFor="name">Full name</label>
         <input id="name" value={form.name} onChange={update("name")} autoComplete="name" {...errorProps("name")} />
         {fieldError("name")}
 
@@ -114,33 +114,33 @@ const AdoptionRequest = ({ onBrowseCats }) => {
             {fieldError("email")}
           </div>
           <div>
-            <label htmlFor="phone">Telefono <span className="muted">(facoltativo)</span></label>
+            <label htmlFor="phone">Phone <span className="muted">(optional)</span></label>
             <input id="phone" type="tel" value={form.phone} onChange={update("phone")} autoComplete="tel" {...errorProps("phone")} />
             {fieldError("phone")}
           </div>
         </div>
 
-        <label htmlFor="home">Dove vivrebbe il gatto?</label>
+        <label htmlFor="home">Where would the cat live?</label>
         <select id="home" value={form.home} onChange={update("home")} {...errorProps("home")}>
-          <option value="">Seleziona…</option>
+          <option value="">Select…</option>
           {HOME_TYPES.map((h) => <option key={h}>{h}</option>)}
         </select>
         {fieldError("home")}
 
-        <label htmlFor="message">Raccontaci di te</label>
+        <label htmlFor="message">Tell us about yourself</label>
         <textarea
           id="message"
           rows={5}
           value={form.message}
           onChange={update("message")}
-          placeholder="Chi vive in casa? Hai già altri animali? Quanto tempo passi fuori casa?"
+          placeholder="Who lives at home? Do you already have other pets? How much time do you spend away from home?"
           {...errorProps("message")}
         />
         {fieldError("message")}
 
         <label className="checkbox">
           <input type="checkbox" checked={form.privacy} onChange={update("privacy")} {...errorProps("privacy")} />
-          Acconsento al trattamento dei dati per essere ricontattato dal rifugio.
+          I agree to the processing of my data so the shelter can contact me.
         </label>
         {fieldError("privacy")}
 
@@ -159,10 +159,10 @@ const AdoptionRequest = ({ onBrowseCats }) => {
 
         <div className="form-actions">
           <button type="button" className="secondary-button" onClick={onBrowseCats} disabled={sending}>
-            Aggiungi altri gatti
+            Add more cats
           </button>
           <button type="submit" className="primary-button" disabled={sending}>
-            {sending ? "Invio in corso..." : "Invia la richiesta"}
+            {sending ? "Sending..." : "Send request"}
           </button>
         </div>
       </form>

@@ -6,8 +6,8 @@ const form = {
   name: " Maria Rossi ",
   email: "maria@example.com",
   phone: "",
-  home: "Casa con giardino",
-  message: "Vivo in una casa con giardino e lavoro da casa.",
+  home: "House with garden",
+  message: "I live in a house with a garden and work from home.",
   privacy: true,
 };
 const cats = [catById("pirata"), catById("neve")];
@@ -30,19 +30,19 @@ describe("sendAdoptionRequest", () => {
     const body = Object.fromEntries(options.body.entries());
     expect(url).toBe("https://api.web3forms.com/submit");
     expect(body.access_key).toEqual(expect.any(String));
-    expect(body.subject).toContain("Pirata, Neve");
+    expect(body.subject).toContain("Pirate, Snow");
     expect(body.name).toBe("Maria Rossi");
-    expect(body.telefono).toBe("non indicato");
+    expect(body.phone).toBe("not provided");
     expect(body).not.toHaveProperty("botcheck");
   });
 
   it("fails when the service rejects the submission", async () => {
     vi.stubGlobal("fetch", vi.fn(() => respond(200, { success: false })));
-    await expect(sendAdoptionRequest(form, cats)).rejects.toThrow(/Non siamo riusciti/);
+    await expect(sendAdoptionRequest(form, cats)).rejects.toThrow(/could not send/);
   });
 
   it("fails with a clear message on network errors", async () => {
     vi.stubGlobal("fetch", vi.fn(() => Promise.reject(new TypeError("Failed to fetch"))));
-    await expect(sendAdoptionRequest(form, cats)).rejects.toThrow(/connessione/);
+    await expect(sendAdoptionRequest(form, cats)).rejects.toThrow(/connection/);
   });
 });

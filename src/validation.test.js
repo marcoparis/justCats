@@ -5,8 +5,8 @@ const valid = {
   name: "Maria Rossi",
   email: "maria.rossi@example.com",
   phone: "+39 333 1234567",
-  home: "Casa con giardino",
-  message: "Vivo con mio marito, niente altri animali, lavoro spesso da casa.",
+  home: "House with garden",
+  message: "I live with my husband, no other pets, and I often work from home.",
   privacy: true,
 };
 
@@ -24,7 +24,7 @@ describe("validateRequest", () => {
     ["email", { email: "maria@" }],
     ["phone", { phone: "abc" }],
     ["home", { home: "" }],
-    ["message", { message: "Ciao" }],
+    ["message", { message: "Hello" }],
     ["privacy", { privacy: false }],
   ])("reports an error for an invalid %s", (field, override) => {
     expect(validateRequest({ ...valid, ...override })).toHaveProperty(field);
